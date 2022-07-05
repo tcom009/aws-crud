@@ -1,4 +1,4 @@
-service: aws-lambda-crud-node
+service: sls-crud
 frameworkVersion: '3'
 
 provider:
@@ -10,7 +10,7 @@ provider:
       Action:
         - dynamodb:*
       Resource:
-        - arn:aws:dynamodb:us-east-1:722832913931:table/TasksTable
+        - arn:aws:dynamodb:us-east-1:722832913931:table/TaskTable
 
 functions:
   hello:
@@ -18,13 +18,13 @@ functions:
     events:
       - httpApi:
           path: /
-          method: get
+          method: GET
   createTask:
     handler: src/addTask.addTask
     events:
       - httpApi:
           path: /tasks
-          method: post
+          method: POST
     
 
 resources:
@@ -32,7 +32,7 @@ resources:
     TasksTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: TasksTable
+        TableName: TaskTable
         BillingMode: PAY_PER_REQUEST
         AttributeDefinitions:
           - AttributeName: id

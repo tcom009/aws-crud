@@ -2,10 +2,8 @@ const { v4 } = require('uuid');
 const AWS = require('aws-sdk');
 
 const addTask = async (event) => {
-    const parsedEvent= JSON.parse(event)
-    console.log(parsedEvent)
+  console.log(event);
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
-  //   const { title, description } = {title:"Title", description:"some description"};
   const { title, description } = JSON.parse(event.body);
   const createdAt = new Date();
   const id = v4();
@@ -15,6 +13,7 @@ const addTask = async (event) => {
     description,
     createdAt,
   };
+  console.log(cleanedData);
   await dynamoDb
     .put({
       TableName: 'TaskTable',
